@@ -31,3 +31,5 @@ C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\obj\Debug\net7.0\refint\Kit
 C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\obj\Debug\net7.0\KitNugs.pdb
 C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\obj\Debug\net7.0\KitNugs.genruntimeconfig.cache
 C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\obj\Debug\net7.0\ref\KitNugs.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\bin\Debug\net7.0\Prometheus.NetStandard.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\bin\Debug\net7.0\Prometheus.AspNetCore.dll

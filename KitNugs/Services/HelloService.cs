@@ -1,4 +1,6 @@
-﻿namespace KitNugs.Services
+﻿using KitNugs.Services.Model;
+
+namespace KitNugs.Services
 {
     public class HelloService : IHelloService
     {
