@@ -2,7 +2,7 @@ using KitNugs.Services;
 
 namespace UnitTest
 {
-    public class Tests
+    public class HelloServiceTests
     {
         public IHelloService helloService;
 
@@ -15,8 +15,12 @@ namespace UnitTest
         [Test]
         public void TestBusinessLogic()
         {
-            var result = helloService.BusinessLogic();
-            Assert.NotNull(result);
+            var input = "my name";
+            var result = helloService.BusinessLogic(input);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Name, Is.EqualTo(input));
+            Assert.That(result.DayOfWeek, Is.EqualTo(DateTime.Today.DayOfWeek.ToString()));
         }
     }
 }

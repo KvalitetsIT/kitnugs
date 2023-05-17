@@ -1,0 +1,13 @@
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\KitNugs.deps.json
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\KitNugs.runtimeconfig.json
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\appsettings.Development.json
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\appsettings.json
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\KitNugs.exe
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\KitNugs.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\KitNugs.pdb
+C:\Users\Jonas Pedersen\source\repos\KitNugs\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
+C:\Users\Jonas Pedersen\source\repos\KitNugs\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
+C:\Users\Jonas Pedersen\source\repos\KitNugs\obj\Debug\docker-compose.dcproj.CopyComplete

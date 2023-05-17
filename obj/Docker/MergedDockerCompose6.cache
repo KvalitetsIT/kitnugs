@@ -1,0 +1,83 @@
+name: dockercompose15720559807604299316
+services:
+  db:
+    environment:
+      MARIADB_DATABASE: hellodb
+      MARIADB_PASSWORD: secret1234
+      MARIADB_ROOT_PASSWORD: secret1234
+      MARIADB_USER: hellouser
+    image: mariadb:10
+    networks:
+      default: null
+  kitnugs:
+    build:
+      context: C:\Users\Jonas Pedersen\source\repos\KitNugs
+      dockerfile: KitNugs/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: KitNugs
+      target: base
+    container_name: KitNugs_1
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: ""
+    image: kitnugs:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net7.0/KitNugs.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 8001
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jonas Pedersen\source\repos\KitNugs
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jonas Pedersen\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jonas Pedersen\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jonas Pedersen\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jonas Pedersen\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: dockercompose15720559807604299316_default

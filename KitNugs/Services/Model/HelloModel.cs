@@ -2,6 +2,7 @@
 {
     public class HelloModel
     {
-        public string Day { get; set; }
+        public string DayOfWeek { get; set; }
+        public string Name { get; set; }
     }
 }

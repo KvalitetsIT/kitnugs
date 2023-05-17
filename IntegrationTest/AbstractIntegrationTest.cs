@@ -16,7 +16,6 @@ namespace IntegrationTest
             x.StartAsync().Wait();
 
             var y = x.GetConnectionString();
-            dbUrl = y;
             Console.WriteLine(y);
         }
     }

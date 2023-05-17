@@ -4,6 +4,6 @@ namespace KitNugs.Services
 {
     public interface IHelloService
     {
-        HelloModel BusinessLogic();
+        HelloModel BusinessLogic(string name);
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
 
@@ -28,8 +29,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHealthChecks("/hc");
-
+app.MapHealthChecks(":8001/hc");
 
 app.Run();
 

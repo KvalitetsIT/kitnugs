@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  db:
+    image: mariadb:10
+    environment:
+        - MARIADB_ROOT_PASSWORD=secret1234
+        - MARIADB_DATABASE=hellodb
+        - MARIADB_USER=hellouser
+        - MARIADB_PASSWORD=secret1234
+
+  
+  kitnugs:
+    image: ${DOCKER_REGISTRY-}kitnugs
+    build:
+      context: .
+      dockerfile: KitNugs/Dockerfile
+    ports:
+        - "8081:8081"

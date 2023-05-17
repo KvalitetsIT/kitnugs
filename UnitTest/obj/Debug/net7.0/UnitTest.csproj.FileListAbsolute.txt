@@ -110,3 +110,5 @@ C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\obj\Debug\net7.0\refint\Un
 C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\obj\Debug\net7.0\UnitTest.pdb
 C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\obj\Debug\net7.0\UnitTest.genruntimeconfig.cache
 C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\obj\Debug\net7.0\ref\UnitTest.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\bin\Debug\net7.0\Prometheus.NetStandard.dll
+C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\bin\Debug\net7.0\Prometheus.AspNetCore.dll

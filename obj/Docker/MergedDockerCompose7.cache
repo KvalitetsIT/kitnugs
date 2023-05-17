@@ -1,0 +1,64 @@
+name: dockercompose15720559807604299316
+services:
+  db:
+    environment:
+      MARIADB_DATABASE: hellodb
+      MARIADB_PASSWORD: secret1234
+      MARIADB_ROOT_PASSWORD: secret1234
+      MARIADB_USER: hellouser
+    image: mariadb:10
+    networks:
+      default: null
+  kitnugs:
+    build:
+      context: C:\Users\Jonas Pedersen\source\repos\KitNugs
+      dockerfile: KitNugs/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: KitNugs
+    container_name: KitNugs_1
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: kitnugs
+    labels:
+      com.microsoft.visual-studio.project-name: KitNugs
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/KitNugs.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 8001
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: C:\Users\Jonas Pedersen\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jonas Pedersen\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jonas Pedersen\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: dockercompose15720559807604299316_default
