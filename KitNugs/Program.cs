@@ -1,10 +1,12 @@
+using KitNugs.Services;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. TODO Refactor DI
+builder.Services.AddSingleton<IHelloService, HelloService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -13,8 +15,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks()
     .AddCheck("db", Health, new string[] { "kuk" })
     .AddCheck("hej hej", Health, new string[] { "jahhh" });
-   
-    
 
 var app = builder.Build();
 
