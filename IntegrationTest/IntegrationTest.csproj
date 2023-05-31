@@ -24,6 +24,6 @@
   </ItemGroup>
   
   <Target Name="NSwag" BeforeTargets="Build">
-    <Exec Command="$(NSwagExe_Net70) openapi2csclient /input:../KitNugs/api.yaml /classname:ServiceClient /namespace:IntegrationTest /output:ServiceClient.cs" />
+    <Exec Command="$(NSwagExe_Net70) openapi2csclient /input:../KitNugs/api.yaml /classname:ServiceClient /namespace:IntegrationTest /output:Generated/ServiceClient.cs" />
   </Target>
 </Project>

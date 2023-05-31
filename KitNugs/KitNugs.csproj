@@ -22,12 +22,8 @@
     </PackageReference>
     <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="8.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <OpenApiReference Include="..\api.yaml" />
-  </ItemGroup>
   
   <Target Name="NSwag" BeforeTargets="Build">
-    <!-- <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe) aspnetcore2openapi /assembly:$(TargetDir)MyWebAssembly.dll /output:swagger.json" /> -->
-    <Exec Command="$(NSwagExe_Net70) openapi2cscontroller /input:api.yaml /classname:MyResource /namespace:KitNugs.Controllers /output:Controllers/NSwagController.cs /UseLiquidTemplates:true /AspNetNamespace:Microsoft.AspNetCore.Mvc /ControllerStyle:abstract /ControllerBaseClass:Microsoft.AspNetCore.Mvc.ControllerBase" />
+    <Exec Command="$(NSwagExe_Net70) openapi2cscontroller /input:api.yaml /classname:Hello /namespace:KitNugs.Controllers /output:Generated/HelloController.cs /UseLiquidTemplates:true /AspNetNamespace:Microsoft.AspNetCore.Mvc /ControllerStyle:abstract /ControllerBaseClass:Microsoft.AspNetCore.Mvc.ControllerBase" />
   </Target>
 </Project>

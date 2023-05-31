@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KitNugs.Controllers
 {
-    public class HelloController : MyResourceControllerBase
+    public class HelloController : HelloControllerBase
     {
         private readonly ILogger<HelloController> _logger;
         private readonly IHelloService helloService;
