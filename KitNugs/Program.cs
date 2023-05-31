@@ -10,6 +10,7 @@ builder.Services.AddSingleton<IServiceConfiguration, ServiceConfiguration>();
 builder.Services.AddSingleton<IHelloService, HelloService>();
 
 builder.Configuration.AddEnvironmentVariables();
+builder.Logging.AddJsonConsole();
 
 builder.Services.AddControllers();
 
