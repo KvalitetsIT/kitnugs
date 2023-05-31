@@ -8,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IHelloService, HelloService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+//// Enable NSwag
+//builder.Services.AddSwaggerDocument();
 
 // Setup health checks and Prometheus endpoint
 builder.Services.AddHealthChecks()
@@ -24,8 +24,8 @@ app.UseHttpMetrics();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApi();
+    app.UseSwaggerUi3();
 }
 
 app.UseAuthorization();

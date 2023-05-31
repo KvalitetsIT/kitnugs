@@ -4,7 +4,7 @@ namespace KitNugs.Services
 {
     public class HelloService : IHelloService
     {
-        public HelloModel BusinessLogic(string name)
+        public async Task<HelloModel> BusinessLogic(string name)
         {
             return new HelloModel()
             {
