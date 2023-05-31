@@ -10,7 +10,6 @@ COPY ["KitNugs/KitNugs.csproj", "KitNugs/"]
 RUN dotnet restore "KitNugs/KitNugs.csproj"
 COPY . .
 WORKDIR "/src/KitNugs"
-RUN ls -al
 RUN dotnet build "KitNugs.csproj" -c Release -o /app/build
 
 FROM build AS publish

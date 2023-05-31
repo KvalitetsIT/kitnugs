@@ -31,8 +31,9 @@
   <ItemGroup>
     <OpenApiReference Include="..\api.yaml" />
   </ItemGroup>
+  
   <Target Name="NSwag" BeforeTargets="Build">
     <!-- <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe) aspnetcore2openapi /assembly:$(TargetDir)MyWebAssembly.dll /output:swagger.json" /> -->
-    <Exec Command="$(NSwagExe) openapi2cscontroller /input:api.yaml /classname:MyResource /namespace:KitNugs.Controllers /output:Controllers/NSwagController.cs /UseLiquidTemplates:true /AspNetNamespace:Microsoft.AspNetCore.Mvc /ControllerStyle:abstract /ControllerBaseClass:Microsoft.AspNetCore.Mvc.ControllerBase" />
-</Target>
+    <Exec Command="$(NSwagExe_Net70) openapi2cscontroller /input:api.yaml /classname:MyResource /namespace:KitNugs.Controllers /output:Controllers/NSwagController.cs /UseLiquidTemplates:true /AspNetNamespace:Microsoft.AspNetCore.Mvc /ControllerStyle:abstract /ControllerBaseClass:Microsoft.AspNetCore.Mvc.ControllerBase" />
+  </Target>
 </Project>
