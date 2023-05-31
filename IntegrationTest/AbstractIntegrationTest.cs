@@ -39,14 +39,13 @@ namespace IntegrationTest
                 .WithImage("service-qa:latest")
                 .WithPortBinding(8080, true)
                 .WithName("service-qa")
-                .WithEnvironment("TEST_VAR", "jeg er så glad for min cykel")
+                .WithEnvironment("TEST_VAR", "TEST_VARIABLE")
                 .Build();
-                
+
             service.StartAsync()
                 .Wait();
 
             servicePort = service.GetMappedPublicPort(8080);
-
         }
 
         private static void StartDatabase(INetwork network)

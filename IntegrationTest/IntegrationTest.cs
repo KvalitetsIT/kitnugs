@@ -12,6 +12,7 @@ namespace IntegrationTest
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Name, Is.EqualTo(name));
+            Assert.That(response.From_configuration, Is.EqualTo("TEST_VARIABLE"));
         }
     }
 }

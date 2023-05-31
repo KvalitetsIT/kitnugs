@@ -1,24 +1,26 @@
-﻿using KitNugs.Services.Model;
+﻿using KitNugs.Configuration;
+using KitNugs.Services.Model;
 
 namespace KitNugs.Services
 {
     public class HelloService : IHelloService
     {
-        private readonly IConfiguration configuration;
+        private readonly IServiceConfiguration configuration;
 
-        public HelloService(IConfiguration configuration)
+        public HelloService(IServiceConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
         public async Task<HelloModel> BusinessLogic(string name)
         {
-            string t = configuration.GetValue<string>("TEST_VAR");
+            string testVariable = configuration.GetConfigurationValue(IServiceConfiguration.ConfigurationVariables.TEST_VAR);
+            
             return new HelloModel()
             {
                 Name = name,
-                DayOfWeek = DateTime.Now.DayOfWeek.ToString(),
-                FromConfiguration = t,
+                Now = DateTime.Now,
+                FromConfiguration = testVariable,
             };
         }
     }

@@ -1,3 +1,4 @@
+using KitNugs.Configuration;
 using KitNugs.Services;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
@@ -5,6 +6,7 @@ using Prometheus;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. TODO Refactor DI
+builder.Services.AddSingleton<IServiceConfiguration, ServiceConfiguration>();
 builder.Services.AddSingleton<IHelloService, HelloService>();
 
 builder.Configuration.AddEnvironmentVariables();
