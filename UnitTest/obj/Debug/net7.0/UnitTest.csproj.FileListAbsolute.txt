@@ -112,3 +112,4 @@ C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\obj\Debug\net7.0\UnitTest.
 C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\obj\Debug\net7.0\ref\UnitTest.dll
 C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\bin\Debug\net7.0\Prometheus.NetStandard.dll
 C:\Users\Jonas Pedersen\source\repos\KitNugs\UnitTest\bin\Debug\net7.0\Prometheus.AspNetCore.dll
+C:\Users\Jonas Pedersen\Source\Repos\kitnugs\UnitTest\bin\Debug\net7.0\Prometheus.AspNetCore.HealthChecks.dll

@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   kitnugs:
-    container_name: KitNugs_1
+    container_name: KitNugs
     build:
       labels:
         com.microsoft.created-by: "visual-studio"

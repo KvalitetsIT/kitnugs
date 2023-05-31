@@ -11,3 +11,7 @@ C:\Users\Jonas Pedersen\source\repos\KitNugs\bin\Debug\KitNugs.pdb
 C:\Users\Jonas Pedersen\source\repos\KitNugs\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 C:\Users\Jonas Pedersen\source\repos\KitNugs\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\Jonas Pedersen\source\repos\KitNugs\obj\Debug\docker-compose.dcproj.CopyComplete
+C:\Users\Jonas Pedersen\Source\Repos\kitnugs\bin\Debug\Prometheus.AspNetCore.HealthChecks.dll
+C:\Users\Jonas Pedersen\Source\Repos\kitnugs\bin\Debug\Prometheus.AspNetCore.dll
+C:\Users\Jonas Pedersen\Source\Repos\kitnugs\bin\Debug\Prometheus.NetStandard.dll
+C:\Users\Jonas Pedersen\Source\Repos\kitnugs\bin\Debug\Newtonsoft.Json.dll

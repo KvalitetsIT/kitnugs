@@ -1,5 +1,4 @@
 using KitNugs.Services;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
 
@@ -12,11 +11,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Setup health checks and Prometheus endpoint
 builder.Services.AddHealthChecks()
-    .AddCheck("db", Health, new string[] { "kuk" })
-    .AddCheck("hej hej", Health, new string[] { "jahhh" });
+                .AddCheck<SampleHealthCheck>(nameof(SampleHealthCheck))
+                .ForwardToPrometheus();
 
 var app = builder.Build();
+
+app.UseHttpMetrics();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -27,13 +30,26 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
-app.MapControllers();
-
-app.MapHealthChecks(":8001/hc");
+// Ensure controllers only respond on port 8080
+app.MapControllers()
+    //.RequireHost("*:8080");
+    ;
+// Ensure health endpoint and Prometheus only respond on port 8081
+app.MapHealthChecks("/healthz")
+    .RequireHost("*:8081")
+    ;
+app.MapMetrics()
+    .RequireHost("*:8081")
+    ;
 
 app.Run();
 
-static HealthCheckResult Health()
+
+public sealed class SampleHealthCheck : IHealthCheck
 {
-    return HealthCheckResult.Unhealthy();
+    public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+    {
+        // All is well!
+        return Task.FromResult(HealthCheckResult.Healthy());
+    }
 }

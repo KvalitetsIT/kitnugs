@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KitNugs.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class HelloController : ControllerBase
+    public class HelloController : AbstractHelloController
     {
         
 
@@ -18,8 +16,7 @@ namespace KitNugs.Controllers
             this.helloService = helloService;
         }
 
-        [HttpGet(Name = "Hello")]
-        public HelloResponse Get([FromQuery] String name)
+        public override HelloResponse Get(String name)
         {
             var businessResult = helloService.BusinessLogic(name);
             return new HelloResponse { ToDay = businessResult.DayOfWeek, Name = businessResult.Name };
@@ -28,7 +25,16 @@ namespace KitNugs.Controllers
 
     public class HelloResponse
     {
-        public String ToDay { get; set; }
-        public String Name { get; set; }
+        public required String ToDay { get; set; }
+        public required String Name { get; set; }
+    }
+
+    [ApiController]
+    [Route("[controller]")]
+    abstract public class AbstractHelloController : ControllerBase
+    {
+        [HttpGet(Name = "Hello")]
+        abstract public HelloResponse Get([FromQuery] String name);
     }
 }
+

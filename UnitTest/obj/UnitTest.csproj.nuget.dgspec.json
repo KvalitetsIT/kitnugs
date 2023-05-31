@@ -42,21 +42,27 @@
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.5, )"
             },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
-              "version": "[1.17.2, )"
+              "version": "[1.18.1, )"
+            },
+            "NSwag.ApiDescription.Client": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[13.19.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
             },
-            "prometheus-net": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "prometheus-net.AspNetCore": {
+            "prometheus-net.AspNetCore.HealthChecks": {
               "target": "Package",
               "version": "[8.0.0, )"
             }

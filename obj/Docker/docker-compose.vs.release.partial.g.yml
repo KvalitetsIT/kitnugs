@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   kitnugs:
-    container_name: KitNugs_1
+    container_name: KitNugs
     build:
       labels:
         com.microsoft.created-by: "visual-studio"
@@ -11,6 +11,7 @@ services:
       - C:\Users\Jonas Pedersen\vsdbg\vs2017u5:/remote_debugger:rw
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net7.0:/TokenService.Proxy:ro
 
     entrypoint: tail -f /dev/null
     labels:

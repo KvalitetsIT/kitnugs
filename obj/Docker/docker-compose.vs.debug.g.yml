@@ -3,7 +3,7 @@ version: '3.4'
 services:
   kitnugs:
     image: kitnugs:dev
-    container_name: KitNugs_1
+    container_name: KitNugs
     build:
       target: base
       labels:

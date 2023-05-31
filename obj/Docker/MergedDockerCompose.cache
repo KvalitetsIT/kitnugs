@@ -1,8 +1,34 @@
-name: dockercompose15720559807604299316
+name: dockercompose844670344096991092
 services:
+  api-editor:
+    environment:
+      SWAGGER_FILE: /tmp/api.yaml
+    image: swaggerapi/swagger-editor:next-v5
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 8080
+      published: "8082"
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: C:\Users\Jonas Pedersen\Source\Repos\kitnugs\api.yaml
+      target: /tmp/api.yaml
+      bind:
+        create_host_path: true
+  db:
+    environment:
+      MARIADB_DATABASE: hellodb
+      MARIADB_PASSWORD: secret1234
+      MARIADB_ROOT_PASSWORD: secret1234
+      MARIADB_USER: hellouser
+    image: mariadb:10
+    networks:
+      default: null
   kitnugs:
     build:
-      context: C:\Users\Jonas Pedersen\source\repos\KitNugs
+      context: C:\Users\Jonas Pedersen\Source\Repos\kitnugs
       dockerfile: KitNugs/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
@@ -11,8 +37,16 @@ services:
       default: null
     ports:
     - mode: ingress
-      target: 80
+      target: 8080
+      protocol: tcp
+    - mode: ingress
+      target: 8080
+      published: "8080"
+      protocol: tcp
+    - mode: ingress
+      target: 8081
+      published: "8081"
       protocol: tcp
 networks:
   default:
-    name: dockercompose15720559807604299316_default
+    name: dockercompose844670344096991092_default

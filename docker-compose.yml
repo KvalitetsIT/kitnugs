@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+  api-editor:
+    image: swaggerapi/swagger-editor:next-v5
+    ports: 
+      - "8082:8080"
+    volumes: 
+      - ./api.yaml:/tmp/api.yaml
+    environment:
+      - SWAGGER_FILE=/tmp/api.yaml
+  
   db:
     image: mariadb:10
     environment:
@@ -16,4 +25,5 @@ services:
       context: .
       dockerfile: KitNugs/Dockerfile
     ports:
+        - "8080:8080"
         - "8081:8081"

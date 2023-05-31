@@ -33,3 +33,5 @@ C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\obj\Debug\net7.0\KitNugs.ge
 C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\obj\Debug\net7.0\ref\KitNugs.dll
 C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\bin\Debug\net7.0\Prometheus.NetStandard.dll
 C:\Users\Jonas Pedersen\source\repos\KitNugs\KitNugs\bin\Debug\net7.0\Prometheus.AspNetCore.dll
+C:\Users\Jonas Pedersen\Source\Repos\kitnugs\KitNugs\bin\Debug\net7.0\Prometheus.AspNetCore.HealthChecks.dll
+C:\Users\Jonas Pedersen\Source\Repos\kitnugs\KitNugs\bin\Debug\net7.0\Newtonsoft.Json.dll
