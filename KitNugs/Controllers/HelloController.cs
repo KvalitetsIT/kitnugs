@@ -14,16 +14,15 @@ namespace KitNugs.Controllers
             this.helloService = helloService;
         }
 
-        public override Task<HelloResponse> Hello([FromQuery] string name)
+        public override async Task<HelloResponse> Hello([FromQuery] string name)
         {
-            var businessResult = helloService.BusinessLogic(name).Result;
+            var businessResult = await helloService.BusinessLogic(name);
 
-            return Task.Run(() => new HelloResponse { 
+            return new HelloResponse { 
                 Now = businessResult.Now, 
                 Name = businessResult.Name,
                 From_configuration = businessResult.FromConfiguration
-            } );
+            };
         }
     }
 }
-
