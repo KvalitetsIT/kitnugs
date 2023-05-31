@@ -1,40 +1,42 @@
 ﻿using KitNugs.Configuration;
-using KitNugs.Services;
 using Microsoft.Extensions.Configuration;
-using NSubstitute;
 
 namespace UnitTest.Configuration
 {
     internal class ServiceConfigurationTests
     {
-        private IConfiguration configuration;
-
         [SetUp]
         public void Setup()
         {
-            configuration = Substitute.For<IConfiguration>();
         }
 
         [Test]
         public void TestBusinessLogic()
         {
-            configuration.GetValue<string>("TEST_VAR").Returns("VALUE");
+            var inMemorySettings = new Dictionary<string, string> {{"TEST_VAR", "VALUE"}};
+            
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
 
-            var helloService = new ServiceConfiguration(configuration);
+            var serviceConfiguration = new ServiceConfiguration(configuration);
 
-            var result = helloService.GetConfigurationValue(IServiceConfiguration.ConfigurationVariables.TEST_VAR);
+            var result = serviceConfiguration.GetConfigurationValue(IServiceConfiguration.ConfigurationVariables.TEST_VAR);
 
-            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.EqualTo("VALUE"));
         }
 
         [Test]
         public void TestMissingVariableThrowsException()
         {
-            var helloService = new ServiceConfiguration(configuration);
+            var inMemorySettings = new Dictionary<string, string> {{"NOT_FOUND", "VALUE"}};
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
 
-            var result = helloService.GetConfigurationValue(IServiceConfiguration.ConfigurationVariables.TEST_VAR);
+            var exception = Assert.Throws<UnsetEnvironmentVariableException>(() => new ServiceConfiguration(configuration));
 
-            Assert.That(result, Is.Not.Null);
+            Assert.That(exception.Message, Is.EqualTo("Environment variable 'TEST_VAR' not set."));
         }
     }
 }
