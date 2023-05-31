@@ -18,7 +18,11 @@ namespace KitNugs.Controllers
         {
             var businessResult = helloService.BusinessLogic(name).Result;
 
-            return Task.Run(() => new HelloResponse { Now = DateTimeOffset.Now, Name = businessResult.Name } );
+            return Task.Run(() => new HelloResponse { 
+                Now = DateTimeOffset.Now, 
+                Name = businessResult.Name,
+                From_configuration = businessResult.FromConfiguration
+            } );
         }
     }
 }

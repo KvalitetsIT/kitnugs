@@ -1,43 +1,66 @@
 ﻿using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Networks;
 
 namespace IntegrationTest
 {
     public abstract class AbstractIntegrationTest
     {
-        string dbUrl;
+        protected static readonly ServiceClient client;
+        protected static int servicePort;
+
         static AbstractIntegrationTest()
         {
             // Create network
             var network = new NetworkBuilder().Build();
 
-            Console.WriteLine("I am static");
-            var builder = new Testcontainers.MariaDb.MariaDbBuilder()
+            StartDatabase(network);
+            BuildAndStartService(network);
+
+            client = new ServiceClient(new HttpClient())
+            {
+                BaseUrl = $"http://localhost:{servicePort}"
+            };
+
+
+        }
+
+        private static void BuildAndStartService(INetwork network)
+        {
+            var image = new ImageFromDockerfileBuilder()
+              .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), String.Empty)
+              .WithDockerfile("KitNugs/Dockerfile")
+              .WithName("service-qa")
+              .Build();
+
+            image.CreateAsync()
+                .Wait();
+
+            var service = new ContainerBuilder()
+                .WithImage("service-qa:latest")
+                .WithPortBinding(8080, true)
+                .WithName("service-qa")
+                .WithEnvironment("TEST_VAR", "jeg er så glad for min cykel")
+                .Build();
+                
+            service.StartAsync()
+                .Wait();
+
+            servicePort = service.GetMappedPublicPort(8080);
+
+        }
+
+        private static void StartDatabase(INetwork network)
+        {
+            // Create and start database container
+            new Testcontainers.MariaDb.MariaDbBuilder()
                 .WithUsername("hellouser")
                 .WithNetwork(network)
                 .WithName("db")
-                .WithPassword("secret1234");
+                .WithPassword("secret1234")
+                .Build()
+                .StartAsync()
+                .Wait();
 
-            var x = builder.Build();
-            x.StartAsync().Wait();
-
-            var z = CommonDirectoryPath.GetSolutionDirectory();
-
-            var futureImage = new ImageFromDockerfileBuilder()
-              .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), String.Empty)
-              .WithDockerfile("Dockerfile")
-              .Build();
-
-            futureImage.CreateAsync().Wait();
-
-            var service = new ContainerBuilder()
-                .WithImage(futureImage)
-                .Build();
-
-            service.StartAsync().Wait();
-
-
-            var y = x.GetConnectionString();
-            Console.WriteLine(y);
         }
     }
 }

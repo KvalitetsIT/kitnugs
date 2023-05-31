@@ -2,15 +2,16 @@ namespace IntegrationTest
 {
     public class Tests : AbstractIntegrationTest
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
 
         [Test]
-        public void Test1()
+        public void TestGetHello()
         {
-            Assert.Pass();
+            var name = Guid.NewGuid().ToString();
+ 
+            var response = client.HelloAsync(name).Result;
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Name, Is.EqualTo(name));
         }
     }
 }

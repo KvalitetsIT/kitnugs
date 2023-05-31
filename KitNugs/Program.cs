@@ -7,15 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container. TODO Refactor DI
 builder.Services.AddSingleton<IHelloService, HelloService>();
 
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.AddControllers();
 
-//// Enable NSwag
-//builder.Services.AddSwaggerDocument();
+// Enable NSwag
+builder.Services.AddSwaggerDocument();
 
 // Setup health checks and Prometheus endpoint
 builder.Services.AddHealthChecks()
                 .AddCheck<SampleHealthCheck>(nameof(SampleHealthCheck))
                 .ForwardToPrometheus();
+
 
 var app = builder.Build();
 
