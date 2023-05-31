@@ -21,7 +21,7 @@ namespace UnitTest.Configuration
 
             var serviceConfiguration = new ServiceConfiguration(configuration);
 
-            var result = serviceConfiguration.GetConfigurationValue(IServiceConfiguration.ConfigurationVariables.TEST_VAR);
+            var result = serviceConfiguration.GetConfigurationValue(ConfigurationVariables.TEST_VAR);
 
             Assert.That(result, Is.EqualTo("VALUE"));
         }

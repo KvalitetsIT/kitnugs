@@ -5,22 +5,20 @@ namespace KitNugs.Services
 {
     public class HelloService : IHelloService
     {
-        private readonly IServiceConfiguration configuration;
+        private readonly string configurationValue;
 
         public HelloService(IServiceConfiguration configuration)
         {
-            this.configuration = configuration;
+            this.configurationValue = configuration.GetConfigurationValue(ConfigurationVariables.TEST_VAR);
         }
 
         public async Task<HelloModel> BusinessLogic(string name)
         {
-            string testVariable = configuration.GetConfigurationValue(IServiceConfiguration.ConfigurationVariables.TEST_VAR);
-            
             return new HelloModel()
             {
                 Name = name,
                 Now = DateTime.Now,
-                FromConfiguration = testVariable,
+                FromConfiguration = configurationValue,
             };
         }
     }

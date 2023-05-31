@@ -2,7 +2,7 @@ using KitNugs.Configuration;
 using KitNugs.Services;
 using NSubstitute;
 
-namespace UnitTest
+namespace UnitTest.Services
 {
     public class HelloServiceTests
     {
@@ -13,13 +13,14 @@ namespace UnitTest
         public void Setup()
         {
             serviceConfiguration = Substitute.For<IServiceConfiguration>();
+            serviceConfiguration.GetConfigurationValue(ConfigurationVariables.TEST_VAR).Returns("VALUE");
+
             helloService = new HelloService(serviceConfiguration);
         }
 
         [Test]
         public void TestBusinessLogic()
         {
-            serviceConfiguration.GetConfigurationValue(IServiceConfiguration.ConfigurationVariables.TEST_VAR).Returns("VALUE");
 
             var input = "my name";
 

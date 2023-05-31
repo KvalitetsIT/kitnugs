@@ -1,12 +1,12 @@
 ﻿namespace KitNugs.Configuration
 {
+    public enum ConfigurationVariables
+    {
+        TEST_VAR,
+    }
+
     public interface IServiceConfiguration
     {
-        enum ConfigurationVariables
-        {
-            TEST_VAR,
-        }
-
         string GetConfigurationValue(ConfigurationVariables configurationVariable);
     }
 }
