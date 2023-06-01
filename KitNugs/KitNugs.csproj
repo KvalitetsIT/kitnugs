@@ -23,7 +23,7 @@
     <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="8.0.0" />
   </ItemGroup>
   
-  <Target Name="NSwag" BeforeTargets="Build">
+  <Target Name="NSwag" BeforeTargets="BeforeBuild">
     <Exec Command="$(NSwagExe_Net70) openapi2cscontroller /input:api.yaml /classname:Hello /namespace:KitNugs.Controllers /output:Generated/HelloController.cs /UseLiquidTemplates:true /AspNetNamespace:Microsoft.AspNetCore.Mvc /ControllerStyle:abstract /ControllerBaseClass:Microsoft.AspNetCore.Mvc.ControllerBase" />
   </Target>
 </Project>
