@@ -12,11 +12,9 @@ builder.Configuration.AddEnvironmentVariables();
 // Configure logging - we use serilog.
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
-
 // Add services to the container. TODO Refactor DI
 builder.Services.AddSingleton<IServiceConfiguration, ServiceConfiguration>();
 builder.Services.AddSingleton<IHelloService, HelloService>();
-
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISessionIdAccessor, DefaultSessionIdAccessor>();
@@ -37,6 +35,9 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 app.UseMiddleware<LogHeaderMiddleware>();
+
+// Ensure all env variables is set.
+app.Services.GetRequiredService<IServiceConfiguration>();
 
 app.UseHttpMetrics();
 
