@@ -1,5 +1,6 @@
 using KitNugs.Configuration;
 using KitNugs.Services;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 namespace UnitTest.Services
@@ -12,10 +13,12 @@ namespace UnitTest.Services
         [SetUp]
         public void Setup()
         {
+            ILogger<HelloService> logger = Substitute.For<ILogger<HelloService>>();
+
             serviceConfiguration = Substitute.For<IServiceConfiguration>();
             serviceConfiguration.GetConfigurationValue(ConfigurationVariables.TEST_VAR).Returns("VALUE");
 
-            helloService = new HelloService(serviceConfiguration);
+            helloService = new HelloService(serviceConfiguration, logger);
         }
 
         [Test]

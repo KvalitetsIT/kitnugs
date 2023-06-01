@@ -1,20 +1,31 @@
 using KitNugs.Configuration;
+using KitNugs.Logging;
 using KitNugs.Services;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables();
+
+// Configure logging - we use serilog.
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
 
 // Add services to the container. TODO Refactor DI
 builder.Services.AddSingleton<IServiceConfiguration, ServiceConfiguration>();
 builder.Services.AddSingleton<IHelloService, HelloService>();
 
-builder.Configuration.AddEnvironmentVariables();
-builder.Logging.AddJsonConsole();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ISessionIdAccessor, DefaultSessionIdAccessor>();
 
 builder.Services.AddControllers();
 
 // Enable NSwag
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerDocument();
 
 // Setup health checks and Prometheus endpoint
@@ -24,6 +35,8 @@ builder.Services.AddHealthChecks()
 
 
 var app = builder.Build();
+
+app.UseMiddleware<LogHeaderMiddleware>();
 
 app.UseHttpMetrics();
 

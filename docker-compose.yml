@@ -26,6 +26,7 @@ services:
       dockerfile: KitNugs/Dockerfile
     environment: 
         - TEST_VAR=TEST VARIABLE
+        - "Serilog__MinimumLevel__Default=Debug"
     ports:
         - "8080:8080"
         - "8081:8081"
