@@ -2,7 +2,7 @@
 
 namespace KitNugs.Repository
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {

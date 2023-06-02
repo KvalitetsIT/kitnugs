@@ -1,7 +1,6 @@
 using KitNugs.Configuration;
 using KitNugs.Repository;
 using KitNugs.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
@@ -10,6 +9,7 @@ namespace UnitTest.Services
     public class HelloServiceTests
     {
         private IServiceConfiguration serviceConfiguration;
+        private AppDbContext dbContext;
         public IHelloService helloService;
 
         [SetUp]
@@ -20,17 +20,14 @@ namespace UnitTest.Services
             serviceConfiguration = Substitute.For<IServiceConfiguration>();
             serviceConfiguration.GetConfigurationValue(ConfigurationVariables.TEST_VAR).Returns("VALUE");
 
-            var helloTableDbSet = Substitute.For<DbSet<HelloTable>, IQueryable<HelloTable>>();
-            var appDb = Substitute.For<IAppDbContext>();
-            appDb.HelloTable.Returns(helloTableDbSet);
+            dbContext = new TestDatabaseFixture().CreateContext();
 
-            helloService = new HelloService(serviceConfiguration, logger, appDb);
+            helloService = new HelloService(serviceConfiguration, logger, dbContext);
         }
 
         [Test]
         public void TestBusinessLogic()
         {
-
             var input = "my name";
 
             var result = helloService.BusinessLogic(input).Result;

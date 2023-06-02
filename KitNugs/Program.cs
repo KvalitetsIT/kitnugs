@@ -3,7 +3,6 @@ using KitNugs.Logging;
 using KitNugs.Repository;
 using KitNugs.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
 using Serilog;
 
@@ -14,27 +13,27 @@ builder.Configuration.AddEnvironmentVariables();
 // Configure logging - we use serilog.
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
-// Add services to the container. TODO Refactor DI
+// Add services to the container.
 builder.Services.AddScoped<IServiceConfiguration, ServiceConfiguration>();
 builder.Services.AddScoped<IHelloService, HelloService>();
-
-builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISessionIdAccessor, DefaultSessionIdAccessor>();
 
-// Replace with your connection string.
+builder.Services.AddHttpContextAccessor();
+
+// Configure database
 var connectionString = builder.Configuration.GetConnectionString("db");
-Console.WriteLine(connectionString);
-// Replace 'YourDbContext' with the name of your own DbContext derived class.
-builder.Services.AddDbContextPool<IAppDbContext, AppDbContext>(
+
+builder.Services.AddDbContextPool<AppDbContext>(
     dbContextOptions => dbContextOptions
         .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
         // The following three options help with debugging, but should
         // be changed or removed for production.
-        .LogTo(Console.WriteLine, LogLevel.Information)
-        .EnableSensitiveDataLogging()
-        .EnableDetailedErrors()
+        //.LogTo(Console.WriteLine, LogLevel.Information)
+        //.EnableSensitiveDataLogging()
+        //.EnableDetailedErrors()
 );
 
+// Add controllers
 builder.Services.AddControllers();
 
 // Enable NSwag
@@ -44,14 +43,12 @@ builder.Services.AddSwaggerDocument();
 
 // Setup health checks and Prometheus endpoint
 builder.Services.AddHealthChecks()
-                .AddCheck<SampleHealthCheck>(nameof(SampleHealthCheck))
                 .AddDbContextCheck<AppDbContext>()
                 .ForwardToPrometheus();
 
 var app = builder.Build();
 
 app.UseMiddleware<LogHeaderMiddleware>();
-
 
 app.UseHttpMetrics();
 
@@ -64,17 +61,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
-// Ensure controllers only respond on port 8080
-app.MapControllers()
-    //.RequireHost("*:8080");
-    ;
+// Map controllers
+app.MapControllers();
+
 // Ensure health endpoint and Prometheus only respond on port 8081
-app.MapHealthChecks("/healthz")
-    .RequireHost("*:8081")
-    ;
-app.MapMetrics()
-    .RequireHost("*:8081")
-    ;
+app.UseHealthChecks("/healthz", 8081);
+app.UseMetricServer(8081, "/metrics");
 
 using (var scope = app.Services.CreateScope())
 {
@@ -88,11 +80,4 @@ using (var scope = app.Services.CreateScope())
 app.Run();
 
 
-public sealed class SampleHealthCheck : IHealthCheck
-{
-    public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
-    {
-        // All is well!
-        return Task.FromResult(HealthCheckResult.Healthy());
-    }
-}
+public partial class Program { }

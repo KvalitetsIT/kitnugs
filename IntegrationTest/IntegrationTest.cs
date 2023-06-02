@@ -1,8 +1,9 @@
+using NUnit.Framework;
+
 namespace IntegrationTest
 {
     public class Tests : AbstractIntegrationTest
     {
-
         [Test]
         public void TestGetHello()
         {

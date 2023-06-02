@@ -19,7 +19,6 @@ services:
         - MARIADB_DATABASE=hellodb
         - MARIADB_USER=hellouser
         - MARIADB_PASSWORD=secret1234
-
   
   kitnugs:
     image: ${DOCKER_REGISTRY-}kitnugs
