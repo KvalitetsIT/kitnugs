@@ -1,15 +1,6 @@
 version: '3.4'
 
 services:
-  swagger-ui:
-    image: swaggerapi/swagger-ui:v4.12.0
-    environment:
-        - URL=/api.yaml 
-    volumes:
-        - ./api.yaml:/usr/share/nginx/html/api.yaml  
-    ports:
-        - 80:8080
-
   db:
     image: mariadb:10
     ports: 
