@@ -12,6 +12,8 @@ services:
 
   db:
     image: mariadb:10
+    ports: 
+        - 3306:3306
     environment:
         - MARIADB_ROOT_PASSWORD=secret1234
         - MARIADB_DATABASE=hellodb
@@ -27,6 +29,7 @@ services:
     environment: 
         - TEST_VAR=TEST VARIABLE
         - "Serilog__MinimumLevel__Default=Debug"
+        - "ConnectionStrings__db=server=db;user=hellouser;password=secret1234;database=hellodb"
     ports:
         - "8080:8080"
         - "8081:8081"

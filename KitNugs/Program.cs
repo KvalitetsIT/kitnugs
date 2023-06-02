@@ -1,9 +1,13 @@
 using KitNugs.Configuration;
 using KitNugs.Logging;
+using KitNugs.Repository;
 using KitNugs.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
 using Serilog;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +17,30 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container. TODO Refactor DI
-builder.Services.AddSingleton<IServiceConfiguration, ServiceConfiguration>();
-builder.Services.AddSingleton<IHelloService, HelloService>();
+builder.Services.AddScoped<IServiceConfiguration, ServiceConfiguration>();
+builder.Services.AddScoped<IHelloService, HelloService>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISessionIdAccessor, DefaultSessionIdAccessor>();
+
+// Replace with your connection string.
+var connectionString = builder.Configuration.GetConnectionString("db");
+// Replace with your server version and type.
+// Use 'MariaDbServerVersion' for MariaDB.
+// Alternatively, use 'ServerVersion.AutoDetect(connectionString)'.
+// For common usages, see pull request #1233.
+//var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
+
+// Replace 'YourDbContext' with the name of your own DbContext derived class.
+builder.Services.AddDbContextPool<FileName>(
+    dbContextOptions => dbContextOptions
+        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+        // The following three options help with debugging, but should
+        // be changed or removed for production.
+        .LogTo(Console.WriteLine, LogLevel.Information)
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors()
+);
 
 builder.Services.AddControllers();
 
@@ -37,7 +60,7 @@ var app = builder.Build();
 app.UseMiddleware<LogHeaderMiddleware>();
 
 // Ensure all env variables is set.
-app.Services.GetRequiredService<IServiceConfiguration>();
+//app.Services.GetRequiredService<IServiceConfiguration>();
 
 app.UseHttpMetrics();
 
@@ -61,6 +84,12 @@ app.MapHealthChecks("/healthz")
 app.MapMetrics()
     .RequireHost("*:8081")
     ;
+
+using (var scope = app.Services.CreateScope())
+{
+    using var dbContext = scope.ServiceProvider.GetRequiredService<FileName>();
+    dbContext.Database.Migrate();
+}
 
 app.Run();
 
