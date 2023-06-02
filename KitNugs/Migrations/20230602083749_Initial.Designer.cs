@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KitNugs.Migrations
 {
-    [DbContext(typeof(FileName))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20230602083749_Initial")]
     partial class Initial
     {

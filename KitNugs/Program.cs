@@ -3,11 +3,9 @@ using KitNugs.Logging;
 using KitNugs.Repository;
 using KitNugs.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prometheus;
 using Serilog;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,14 +23,9 @@ builder.Services.AddScoped<ISessionIdAccessor, DefaultSessionIdAccessor>();
 
 // Replace with your connection string.
 var connectionString = builder.Configuration.GetConnectionString("db");
-// Replace with your server version and type.
-// Use 'MariaDbServerVersion' for MariaDB.
-// Alternatively, use 'ServerVersion.AutoDetect(connectionString)'.
-// For common usages, see pull request #1233.
-//var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
-
+Console.WriteLine(connectionString);
 // Replace 'YourDbContext' with the name of your own DbContext derived class.
-builder.Services.AddDbContextPool<FileName>(
+builder.Services.AddDbContextPool<IAppDbContext, AppDbContext>(
     dbContextOptions => dbContextOptions
         .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
         // The following three options help with debugging, but should
@@ -59,8 +52,6 @@ var app = builder.Build();
 
 app.UseMiddleware<LogHeaderMiddleware>();
 
-// Ensure all env variables is set.
-//app.Services.GetRequiredService<IServiceConfiguration>();
 
 app.UseHttpMetrics();
 
@@ -87,7 +78,10 @@ app.MapMetrics()
 
 using (var scope = app.Services.CreateScope())
 {
-    using var dbContext = scope.ServiceProvider.GetRequiredService<FileName>();
+    // Ensure all env variables is set.
+    scope.ServiceProvider.GetRequiredService<IServiceConfiguration>();
+
+    using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
 }
 

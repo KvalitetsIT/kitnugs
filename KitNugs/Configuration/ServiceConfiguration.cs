@@ -2,7 +2,8 @@
 {
     public class ServiceConfiguration : IServiceConfiguration
     {
-        private IDictionary<string, string> values = new Dictionary<string, string>();
+        private readonly IDictionary<string, string> values = new Dictionary<string, string>();
+
         public ServiceConfiguration(IConfiguration configuration)
         {
             foreach(string name in Enum.GetNames(typeof(ConfigurationVariables)))

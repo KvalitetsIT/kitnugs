@@ -20,8 +20,6 @@ namespace IntegrationTest
             {
                 BaseUrl = $"http://localhost:{servicePort}"
             };
-
-
         }
 
         private static void BuildAndStartService(INetwork network)
@@ -39,7 +37,9 @@ namespace IntegrationTest
                 .WithImage("service-qa:latest")
                 .WithPortBinding(8080, true)
                 .WithName("service-qa")
+                .WithNetwork(network)
                 .WithEnvironment("TEST_VAR", "TEST_VARIABLE")
+                .WithEnvironment("ConnectionStrings__db", "server=db-qa,3306;user=hellouser;password=secret1234;database=hellodb")
                 .Build();
 
             service.StartAsync()
@@ -51,15 +51,16 @@ namespace IntegrationTest
         private static void StartDatabase(INetwork network)
         {
             // Create and start database container
-            new Testcontainers.MariaDb.MariaDbBuilder()
+            var db = new Testcontainers.MariaDb.MariaDbBuilder()
                 .WithUsername("hellouser")
                 .WithNetwork(network)
-                .WithName("db")
+                .WithName("db-qa")
                 .WithPassword("secret1234")
-                .Build()
-                .StartAsync()
-                .Wait();
+                .WithDatabase("hellodb")
+                .Build();
 
+            db.StartAsync()
+                .Wait();
         }
     }
 }

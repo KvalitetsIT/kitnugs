@@ -4,5 +4,5 @@ services:
   kitnugs:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "8080"
+    #ports:
+    #  - "8080"
