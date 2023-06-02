@@ -45,8 +45,8 @@ builder.Services.AddSwaggerDocument();
 // Setup health checks and Prometheus endpoint
 builder.Services.AddHealthChecks()
                 .AddCheck<SampleHealthCheck>(nameof(SampleHealthCheck))
+                .AddDbContextCheck<AppDbContext>()
                 .ForwardToPrometheus();
-
 
 var app = builder.Build();
 

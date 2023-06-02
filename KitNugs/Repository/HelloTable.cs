@@ -6,8 +6,5 @@ namespace KitNugs.Repository
     {
         public int HelloTableId { get; set; }
         public DateTimeOffset Created { get; set; }
-
-        [Column(TypeName = "varchar(50)")]
-        public string? AnotherColumn { get; set; }
     }
 }

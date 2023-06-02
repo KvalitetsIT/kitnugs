@@ -22,7 +22,6 @@ namespace KitNugs.Services
             await dbContext.HelloTable.AddAsync(new HelloTable
             {
                 Created = DateTimeOffset.Now,
-                AnotherColumn = Guid.NewGuid().ToString(),
             });
 
             logger.LogDebug("Doing business logic.");

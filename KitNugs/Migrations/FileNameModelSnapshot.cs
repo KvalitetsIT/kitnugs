@@ -25,9 +25,6 @@ namespace KitNugs.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("AnotherColumn")
-                        .HasColumnType("varchar(50)");
-
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetime(6)");
 
