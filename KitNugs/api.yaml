@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: Kithugs
+  description: API description for KITHUGS.
+  version: "1.0.0"
+  contact:
+    email: development@kvalitetitsit.dk
+tags:
+  - name: KITHUGS
+    description: KITHUGS related API's
+
+servers:
+  - url: 'http://localhost:8080'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      environment:
+        enum:
+          - localhost # Docker-compose setup
+        default: localhost # Development
+      port:
+        enum:
+          - 8080
+        default: 8080
+
+paths:
+  /v1/hello:
+    get:
+      tags:
+        - KITHUGS
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: Name. If name is "NOT_VALID" an validation error occurs.
+          schema:
+            type: string
+            maxLength: 10
+          example: 'John Doe'
+      summary: Call the thugs service
+      description: Post your name and get some hugs or meet some thugs.
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/helloResponse'
+        '400':
+          $ref: '#/components/responses/400'
+
+
+components:
+  responses:
+    '400':
+      description: "Bad Request. This could be because: * One of the required parameters/properties are missing or is empty <br> * Length of input is exceeding maximum length <br> (See a possible detailed error message in the in the response.)"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/detailedError'
+    '401':
+      description: "Unauthorized. This could be because: <br> * The calling system has not been properly authenticated."
+    '403':
+      description: "Forbidden. This could be because: <br> * The requested information does not belong the organisation of the user <br> * The calling user does not have the required roles"
+
+  schemas:
+    helloResponse:
+      type: object
+      required:
+        - name
+        - now
+        - fromC_configuration
+      properties:
+        name:
+          description: Your name
+          type: string
+          example: "John Doe"
+        now:
+          description: Time request was received
+          type: string
+          format: date-time
+        i_can_be_null:
+          type: string
+          nullable: true
+        from_configuration:
+          type: string
+      additionalProperties: false
+
+    detailedError:
+      allOf:
+        - $ref: '#/components/schemas/basicError'
+        - type: object
+          required:
+            - detailed_error
+            - detailed_error_code
+          properties:
+            detailed_error:
+              description: Detailed error text. This could be a text describing an validation error.
+              type: string
+            detailed_error_code:
+              description:
+              type: string
+              enum:
+                - 10
+                - 20
+
+    basicError:
+      type: object
+      required:
+        - timestamp
+        - status
+        - error
+        - path
+      properties:
+        error:
+          description: Error message.
+          type: string
+        path:
+          description: Path
+          type: string
+        status:
+          description: HTTP status code
+          type: integer
+        timestamp:
+          description: Time of error
+          type: string
+          format: date-time
