@@ -1,0 +1,69 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: BuildAndTestAndPush
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+  # Set docker image names.
+    - name: Setup env variables
+      run: |
+        echo "DOCKER_SERVICE=kvalitetsit/kitnugs" >> $GITHUB_ENV
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+  # Tests   
+    - name: Restore dependencies
+      run: dotnet restore KitNugs.sln
+    - name: Build
+      run: dotnet build --no-restore KitNugs.sln
+    - name: UnitTests
+      run: dotnet test --no-build --verbosity normal ./UnitTest/UnitTest.csproj
+    - name: IntegrationTest
+      run: dotnet test --no-build --verbosity normal ./IntegrationTest/IntegrationTest.csproj
+  
+  # Build as dockerimage  
+    - name: Build image
+      run: ./build/build.sh ${{ env.DOCKER_SERVICE }}
+    
+  # Tag and push to dockerhub
+    - name: Login to docker
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USER }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Tag service dev docker image
+      run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:dev
+    - name: Push service dev docker image
+      run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:dev
+
+    - name: Tag service git id docker image
+      run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:${{ github.sha }}
+    - name: Push service git id docker image.
+      run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:${{ github.sha }}
+    
+      # if below step is skipped this build is a tag build. Can be used for skipping other steps.
+    - name: Is Tag Build
+      id: tag
+      if:  ${{ startsWith(github.ref, 'refs/tags/v') }}
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+    - name: Tag version service docker image
+      if: ${{ steps.tag.conclusion != 'skipped' }}
+      run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:${{ steps.tag.outputs.VERSION }}
+    - name: Push version service docker image.
+      if: ${{ steps.tag.conclusion != 'skipped' }}
+      run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:${{ steps.tag.outputs.VERSION }}
