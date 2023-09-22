@@ -1,7 +1,3 @@
-# 🔴🔴 REPOSITORIET ER ARKIVERET! 🔴🔴
-__Dette er sket eftersom det er flyttet til Azure. Det kan findes her https://novaxsoftware.visualstudio.com/Service%20Hub/_git/kitnugs__
-
-
 # kitnugs
 
 Template repository showing how to be a good .NET application in a k8s cluster.
