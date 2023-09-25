@@ -1,11 +1,8 @@
 ﻿using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Networks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace IntegrationTest
 {
@@ -37,6 +34,8 @@ namespace IntegrationTest
                 httpClient = new HttpClient();
             }
 
+            httpClient.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
             client = new ServiceClient(httpClient)
             {
                 BaseUrl = $"http://localhost:{servicePort}"
@@ -46,7 +45,7 @@ namespace IntegrationTest
         private static void BuildAndStartService(INetwork network)
         {
             var image = new ImageFromDockerfileBuilder()
-              .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), String.Empty)
+              .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), string.Empty)
               .WithDockerfile("KitNugs/Dockerfile")
               .WithName("service-qa")
               .Build();

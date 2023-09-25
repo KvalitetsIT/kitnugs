@@ -35,7 +35,7 @@
   </ItemGroup>
   
   <Target Name="NSwag" BeforeTargets="BeforeBuild">
-    <Exec Command="$(NSwagExe_Net70) openapi2csclient /input:../KitNugs/api.yaml /classname:ServiceClient /namespace:IntegrationTest /output:Generated/ServiceClient.cs" />
+    <Exec Command="$(NSwagExe_Net70) openapi2csclient /input:../Documentation/api.yaml /classname:ServiceClient /namespace:IntegrationTest /output:Generated/ServiceClient.cs" />
     <ItemGroup>
       <Compile Include="Generated/ServiceClient.cs" Exclude="@(Compile)" />
     </ItemGroup>
