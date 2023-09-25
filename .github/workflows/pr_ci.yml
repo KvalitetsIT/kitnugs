@@ -1,0 +1,36 @@
+name:  Pull Request CI
+
+on:
+  pull_request: ~
+
+jobs:
+  pr_build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Setup env variables
+      run: |
+        echo "DOCKER_SERVICE=kvalitetsit/kitnugs" >> $GITHUB_ENV
+
+# Checkout source code        
+    - uses: actions/checkout@v3
+
+# Setup .NET version 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+  # Build and test   
+    - name: Restore dependencies
+      run: dotnet restore KitNugs.sln
+
+    - name: Build
+      run: dotnet build --no-restore KitNugs.sln
+
+    - name: UnitTests
+      run: dotnet test --no-build --verbosity normal ./UnitTest/UnitTest.csproj
+
+    - name: IntegrationTest
+      run: dotnet test --no-build --verbosity normal ./IntegrationTest/IntegrationTest.csproj
+  

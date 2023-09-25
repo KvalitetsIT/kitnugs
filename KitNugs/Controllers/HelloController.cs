@@ -27,7 +27,7 @@ namespace KitNugs.Controllers
             {
                 Now = businessResult.Now.DateTime,
                 Name = businessResult.Name,
-                FromConfiguration = businessResult.FromConfiguration
+                From_configuration = businessResult.FromConfiguration
             };
 
             return Ok(response);
