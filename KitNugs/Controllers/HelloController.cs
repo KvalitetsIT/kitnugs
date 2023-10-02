@@ -19,8 +19,6 @@ namespace KitNugs.Controllers
         public override async Task<IActionResult> V1HelloGet(string name)
         {
             _logger.LogInformation("Entering GET!");
-            _logger.LogWarning("Hej med dig");
-            _logger.LogError("KUKUK");
             var businessResult = await _helloService.BusinessLogic(name);
 
             var response = new HelloResponse()

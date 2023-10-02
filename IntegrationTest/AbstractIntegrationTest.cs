@@ -48,6 +48,7 @@ namespace IntegrationTest
               .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), string.Empty)
               .WithDockerfile("KitNugs/Dockerfile")
               .WithName("service-qa")
+              .WithCleanUp(false)
               .Build();
 
             image.CreateAsync()
