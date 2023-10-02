@@ -21,11 +21,11 @@ jobs:
         echo "DOCKER_SERVICE=kvalitetsit/kitnugs" >> $GITHUB_ENV
         echo "DOCKER_DOCUMENTATION=kvalitetsit/kitnugs-documentation" >> $GITHUB_ENV
 
-# Fail if DOCKER_SERVICE is kithugs and repo is not kithugs. This step can be deleted once
+    - uses: actions/checkout@v3
+
+      # Fail if DOCKER_SERVICE is kithugs and repo is not kithugs. This step can be deleted once
     - name: Initial build
       run: ./build/failOnFirstBuild.sh  
-
-    - uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3

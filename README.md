@@ -41,7 +41,7 @@ The service uses a few different NuGet packages out of the box.
 
 ## Getting started
 
-Click "Use this template" in Github. After new repository have been created clone the solution and open it in Visual Studio. Finally rename solution, namespaces etc. 
+Click "Use this template" in Github. After new repository have been created clone the solution and run `setup.sh` command. This will rename the most essential stuff in the solution. Finally open it in your favaroute IDE and rename solution, namespaces etc. 
 
 ## Source code generation
 
