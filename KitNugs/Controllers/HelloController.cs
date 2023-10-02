@@ -24,8 +24,8 @@ namespace KitNugs.Controllers
             var response = new HelloResponse()
             {
                 Now = businessResult.Now.DateTime,
-                Name = businessResult.Name,
-                From_configuration = businessResult.FromConfiguration
+                Name = businessResult.Name, 
+                FromConfiguration = businessResult.FromConfiguration
             };
 
             return Ok(response);
