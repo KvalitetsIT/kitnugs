@@ -51,7 +51,7 @@ jobs:
       run: ./build/build.sh ${{ env.DOCKER_SERVICE }}
 
     - name: Build documentation image
-      run: /build/build-documentation.sh ${{ env.DOCKER_SERVICE }}  
+      run: ./build/build-documentation.sh ${{ env.DOCKER_SERVICE }}  
 
   # Tag and push to dockerhub
     - name: Login to docker
