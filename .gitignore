@@ -400,3 +400,6 @@ FodyWeavers.xsd
 
 # NSwag genrated files
 Generated/
+
+current-version
+target
