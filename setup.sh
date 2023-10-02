@@ -13,13 +13,13 @@ fi
 ignore_files=".git|setup.sh|dependabot-auto-merge.yml"
 
 files=(
-  ".github/build.yaml"
-  ".github/pr_build.yaml"
+  ".github/workflows/build.yml"
+  ".github/workflows/pr_ci.yml"
   "IntegrationTest/AbstractIntegrationTest.cs"
 )
 
 #for input_file in `tree -I "${ignore_files}" -Ffai --noreport`
-for input_file in files
+for input_file in ${files[@]}
 do
   if [ ! -d "${input_file}" ]; then
     echo "Processing file: ${input_file}"
