@@ -1,8 +1,12 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using KitNugs.Configuration;
 using KitNugs.Logging;
 using KitNugs.Repository;
 using KitNugs.Services;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using Prometheus;
 using Serilog;
 
@@ -34,12 +38,19 @@ builder.Services.AddDbContextPool<AppDbContext>(
 );
 
 // Add controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(opts =>
+{
+    opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+    opts.SerializerSettings.Converters.Add(new StringEnumConverter
+    {
+        NamingStrategy = new CamelCaseNamingStrategy()
+    });
+});
 
-// Enable NSwag
+// Enable Swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerDocument();
+builder.Services.AddSwaggerGen();
 
 // Setup health checks and Prometheus endpoint
 builder.Services.AddHealthChecks()
@@ -55,8 +66,8 @@ app.UseHttpMetrics();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseOpenApi();
-    app.UseSwaggerUi3();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseAuthorization();

@@ -7,7 +7,7 @@ namespace IntegrationTest
         [Test]
         public void TestGetHello()
         {
-            var name = Guid.NewGuid().ToString();
+            var name = "Name";
  
             var response = client.HelloAsync(name).Result;
 

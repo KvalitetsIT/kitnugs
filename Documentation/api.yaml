@@ -72,7 +72,7 @@ components:
       required:
         - name
         - now
-        - fromC_configuration
+        - from_configuration
       properties:
         name:
           description: Your name
