@@ -49,7 +49,10 @@ jobs:
   # Build as dockerimage  
     - name: Build image
       run: ./build/build.sh ${{ env.DOCKER_SERVICE }}
-    
+
+    - name: Build documentation image
+      run: /build/build-documentation.sh ${{ env.DOCKER_SERVICE }}  
+
   # Tag and push to dockerhub
     - name: Login to docker
       uses: docker/login-action@v2
