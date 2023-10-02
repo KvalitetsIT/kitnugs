@@ -4,6 +4,8 @@
 
 git describe --tags --always > Documentation/current-version
 
+mkdir -p Documentation/target
+
 cp Documentation/api.yaml Documentation/target/$(cat Documentation/current-version).yaml
 
 IMAGE_NAME=$1
