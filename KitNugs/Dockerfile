@@ -16,6 +16,16 @@ FROM build AS publish
 RUN dotnet publish "KitNugs.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
+
+RUN groupadd --gid 11000 appuser && \
+    useradd --gid 11000 --uid 11000 -m appuser
+
+
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "KitNugs.dll"]
+
+RUN chmod 644 /app/appsettings.json
+
+USER 11000
+
+CMD ["dotnet", "KitNugs.dll"]
