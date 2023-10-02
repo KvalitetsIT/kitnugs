@@ -47,7 +47,7 @@ namespace IntegrationTest
             var image = new ImageFromDockerfileBuilder()
               .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), string.Empty)
               .WithDockerfile("KitNugs/Dockerfile")
-              .WithName("service-qa")
+              .WithName("kvalitetsit/kitnugs")
               .WithCleanUp(false)
               .Build();
 
@@ -55,7 +55,7 @@ namespace IntegrationTest
                 .Wait();
 
             var service = new ContainerBuilder()
-                .WithImage("service-qa:latest")
+                .WithImage("kvalitetsit/kitnugs:latest")
                 .WithPortBinding(8080, true)
                 .WithPortBinding(8081, true)
                 .WithName("service-qa")
