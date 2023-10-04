@@ -61,7 +61,7 @@ namespace IntegrationTest
                 .WithName("service-qa")
                 .WithNetwork(network)
                 .WithEnvironment("TEST_VAR", "TEST_VARIABLE")
-                .WithEnvironment("ConnectionStrings__db", "server=db-qa,3306;user=hellouser;password=secret1234;database=hellodb")
+                .WithEnvironment("ConnectionStrings__db", "Host=db-qa;Database=hellodb;Username=hellouser;Password=secret1234")
                 .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(r => r.ForPath("/healthz").ForPort(8081)))
                 .Build();
 
@@ -74,7 +74,7 @@ namespace IntegrationTest
         private static void StartDatabase(INetwork network)
         {
             // Create and start database container
-            var db = new Testcontainers.MariaDb.MariaDbBuilder()
+            var db = new Testcontainers.PostgreSql.PostgreSqlBuilder()
                 .WithUsername("hellouser")
                 .WithNetwork(network)
                 .WithName("db-qa")

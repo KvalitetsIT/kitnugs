@@ -14,7 +14,7 @@ namespace UnitTest
         {
             var network = new NetworkBuilder().Build();
 
-            var db = new Testcontainers.MariaDb.MariaDbBuilder()
+            var db = new Testcontainers.PostgreSql.PostgreSqlBuilder()
                 .WithUsername("hellouser")
                 .WithNetwork(network)
                 .WithPassword("secret1234")
@@ -42,7 +42,7 @@ namespace UnitTest
         public AppDbContext CreateContext()
             => new AppDbContext(
                 new DbContextOptionsBuilder<AppDbContext>()
-                    .UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString))
+                    .UseNpgsql(ConnectionString)
                     .Options);
     }
 }

@@ -8,7 +8,7 @@ namespace UnitTest.Repository
         {
             var f = new TestDatabaseFixture().CreateContext();
 
-            f.HelloTable.Add(new HelloTable { Created = DateTimeOffset.Now });
+            f.HelloTable.Add(new HelloTable { Created = DateTimeOffset.Now.ToUniversalTime() });
             f.SaveChanges();
 
             var count = f.HelloTable.Count();
@@ -20,12 +20,11 @@ namespace UnitTest.Repository
         {
             var f = new TestDatabaseFixture().CreateContext();
 
-            f.HelloTable.Add(new HelloTable { Created = DateTimeOffset.Now });
+            f.HelloTable.Add(new HelloTable { Created = DateTimeOffset.Now.ToUniversalTime() });
             f.SaveChanges();
 
             var count = f.HelloTable.Count();
             Assert.That(count, Is.EqualTo(1));
         }
     }
-
 }

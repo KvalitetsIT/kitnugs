@@ -22,7 +22,7 @@ namespace KitNugs.Services
         {
             await _dbContext.HelloTable.AddAsync(new HelloTable
             {
-                Created = DateTimeOffset.Now,
+                Created = DateTimeOffset.Now.ToUniversalTime(),
             });
 
             _logger.LogDebug("Doing business logic.");

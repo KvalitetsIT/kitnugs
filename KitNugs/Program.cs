@@ -34,7 +34,7 @@ var connectionString = builder.Configuration.GetConnectionString("db");
 
 builder.Services.AddDbContextPool<AppDbContext>(
     dbContextOptions => dbContextOptions
-        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+        .UseNpgsql(connectionString)
         // The following three options help with debugging, but should
         // be changed or removed for production.
         //.LogTo(Console.WriteLine, LogLevel.Information)
