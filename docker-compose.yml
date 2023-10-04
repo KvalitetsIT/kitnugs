@@ -2,14 +2,13 @@ version: '3.4'
 
 services:
   db:
-    image: mariadb:10
+    image: postgres:15
     ports: 
         - 3306:3306
     environment:
-        - MARIADB_ROOT_PASSWORD=secret1234
-        - MARIADB_DATABASE=hellodb
-        - MARIADB_USER=hellouser
-        - MARIADB_PASSWORD=secret1234
+        - POSTGRES_PASSWORD=secret1234
+        - POSTGRES_DB=hellodb
+        - POSTGRES_USER=hellouser
   
   kitnugs:
     image: ${DOCKER_REGISTRY-}kitnugs
@@ -19,7 +18,7 @@ services:
     environment: 
         - TEST_VAR=TEST VARIABLE
         - "Serilog__MinimumLevel__Default=Debug"
-        - "ConnectionStrings__db=server=db;user=hellouser;password=secret1234;database=hellodb"
+        - "ConnectionStrings__db=Host=db;Database=hellodb;Username=hellouser;Password=secret1234"
     ports:
         - "8080:8080"
         - "8081:8081"
