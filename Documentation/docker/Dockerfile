@@ -1,6 +1,7 @@
 FROM swaggerapi/swagger-ui:v4.12.0
 
 COPY target/*.yaml /usr/share/nginx/html/
+COPY old/*.yaml /usr/share/nginx/html/
 
 COPY docker/versions /kit/versions
 COPY docker/config/setVersion.sh /kit/setVersion.sh
