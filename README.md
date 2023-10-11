@@ -47,7 +47,9 @@ Click "Use this template" in Github. After new repository have been created clon
 
 Models and interfaces is generated based on OpenAPI document. Currently generating models and interfaces is a manual task. It can be done with the below command. It is expected that you are placed in the solution folder. 
 
-`docker run --rm --user $(id -u) -v $(pwd)/Documentation:/local openapitools/openapi-generator-cli generate -i /local/api.yaml -o /local/Generated -g aspnetcore -p buildTarget=library,returnICollection=true,aspnetCoreVersion=6.0,isLibrary=true,operationIsAsync=true,operationResultTask=true,nullableReferenceTypes=true,useNewtonsoft=true`
+`
+docker run --rm --user $(id -u) -v $(pwd)/Documentation:/local openapitools/openapi-generator-cli generate -i /local/api.yaml -o /local/Generated -g aspnetcore -p buildTarget=library,returnICollection=true,aspnetCoreVersion=6.0,isLibrary=true,operationIsAsync=true,operationResultTask=true,nullableReferenceTypes=true,useNewtonsoft=true,useDateTimeOffset=true
+`
 
 When the CI/CD pipeline is executed, the generation is done as a part of the pipeline to ensure that solution is using latest version of the API.
 
