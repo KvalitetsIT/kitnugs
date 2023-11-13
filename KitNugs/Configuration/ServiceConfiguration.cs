@@ -1,20 +1,10 @@
-﻿namespace KitNugs.Configuration
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KitNugs.Configuration
 {
-    public class ServiceConfiguration : IServiceConfiguration
+    public class ServiceConfiguration
     {
-        private readonly IDictionary<string, string> _values = new Dictionary<string, string>();
-
-        public ServiceConfiguration(IConfiguration configuration)
-        {
-            foreach(string name in Enum.GetNames(typeof(ConfigurationVariables)))
-            {
-                _values[name] = configuration.GetValue<string>(name) ?? throw new UnsetEnvironmentVariableException(name); ;
-            }
-        }
-
-        public string GetConfigurationValue(ConfigurationVariables configurationVariable)
-        {
-            return _values[configurationVariable.ToString()];
-        }
+        [Required]
+        public string TEST_VAR { get; set; }
     }
 }

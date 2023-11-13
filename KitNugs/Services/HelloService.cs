@@ -1,6 +1,7 @@
 ﻿using KitNugs.Configuration;
 using KitNugs.Repository;
 using KitNugs.Services.Model;
+using Microsoft.Extensions.Options;
 
 namespace KitNugs.Services
 {
@@ -10,9 +11,9 @@ namespace KitNugs.Services
         private readonly ILogger<HelloService> _logger;
         private readonly AppDbContext _dbContext;
 
-        public HelloService(IServiceConfiguration configuration, ILogger<HelloService> logger, AppDbContext dbContext)
+        public HelloService(IOptions<ServiceConfiguration> options, ILogger<HelloService> logger, AppDbContext dbContext)
         {
-            _configurationValue = configuration.GetConfigurationValue(ConfigurationVariables.TEST_VAR);
+            _configurationValue = options.Value.TEST_VAR;
             _logger = logger;
             _dbContext = dbContext;
         }
