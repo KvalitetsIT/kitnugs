@@ -12,13 +12,18 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Wire up configuration
 builder.Configuration.AddEnvironmentVariables();
+
+builder.Services.AddOptions<ServiceConfiguration>()
+    .Bind(builder.Configuration)
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
 
 // Configure logging - we use serilog.
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
-builder.Services.AddScoped<IServiceConfiguration, ServiceConfiguration>();
 builder.Services.AddScoped<IHelloService, HelloService>();
 builder.Services.AddScoped<ISessionIdAccessor, DefaultSessionIdAccessor>();
 
@@ -81,9 +86,6 @@ app.UseMetricServer(8081, "/metrics");
 
 using (var scope = app.Services.CreateScope())
 {
-    // Ensure all env variables is set.
-    scope.ServiceProvider.GetRequiredService<IServiceConfiguration>();
-
     using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
 }
