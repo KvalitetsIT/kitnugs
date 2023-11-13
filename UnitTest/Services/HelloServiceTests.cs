@@ -26,6 +26,12 @@ namespace UnitTest.Services
             _helloService = new HelloService(_options, logger, _dbContext);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _dbContext?.Dispose();
+        }
+
         [Test]
         public void TestBusinessLogic()
         {

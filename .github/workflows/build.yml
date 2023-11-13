@@ -32,11 +32,10 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-
-  # Generate model and interfaces.
+      
+    # Generate model and interfaces.
     - name: Generate model and API
-      run: docker run --rm --user $(id -u) -v $(pwd)/Documentation:/local openapitools/openapi-generator-cli generate -i /local/api.yaml -o /local/Generated -g aspnetcore -p buildTarget=library,returnICollection=true,aspnetCoreVersion=6.0,isLibrary=true,operationIsAsync=true,operationResultTask=true,nullableReferenceTypes=true,useNewtonsoft=true
-  
+      run: ./build/generate-models.sh
 
   # Tests
     - name: Restore dependencies
