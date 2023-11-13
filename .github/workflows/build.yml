@@ -22,7 +22,7 @@ jobs:
         echo "DOCKER_SERVICE=kvalitetsit/kitnugs" >> $GITHUB_ENV
         echo "DOCKER_DOCUMENTATION=kvalitetsit/kitnugs-documentation" >> $GITHUB_ENV
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
       # Fail if DOCKER_SERVICE is kithugs and repo is not kithugs. This step can be deleted once
     - name: Initial build
