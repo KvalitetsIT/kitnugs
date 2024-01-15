@@ -23,7 +23,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Testcontainers.MariaDb" Version="3.6.0" />
+    <PackageReference Include="Testcontainers.MariaDb" Version="3.7.0" />
   </ItemGroup>
 
   <ItemGroup>
