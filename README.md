@@ -23,7 +23,7 @@ further than just being a good service and also touches areas like operations.
 Below tools is required to work with the solution. 
 
 - EF Core for database migrations. Can be installed with `dotnet tool install --global dotnet-ef`
-- .NET 7.0
+- .NET 8.0
 - Docker
 - It is recommended to use Visual Studio 2022. Visual Studio Code can be used as well. 
 
