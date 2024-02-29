@@ -28,6 +28,9 @@ jobs:
     - name: Generate model and API
       run: ./build/generate-models.sh
 
+    - name: debug
+      run: run ls -al Documentation/Generated/src/Org.OpenAPITools/Models/HelloResponse.cs
+
     - name: Restore dependencies
       run: dotnet restore KitNugs.sln
 
