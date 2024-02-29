@@ -30,7 +30,7 @@ builder.Services.AddScoped<ISessionIdAccessor, DefaultSessionIdAccessor>();
 builder.Services.AddHttpContextAccessor();
 
 // Configure database
-var connectionString = builder.Configuration.GetConnectionString("db");
+var connectionString = Environment.ExpandEnvironmentVariables(builder.Configuration.GetConnectionString("db"));
 
 builder.Services.AddDbContextPool<AppDbContext>(
     dbContextOptions => dbContextOptions
