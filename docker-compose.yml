@@ -10,14 +10,7 @@ services:
         - POSTGRES_DB=hellodb
         - POSTGRES_USER=hellouser
   
-  frontend:
-    image: nginx:alpine
-    ports:
-        - "8090:8080"
-    volumes:
-      - ./compose/nginx.conf:/etc/nginx/conf.d/custom.conf:ro
-      
-  application:
+  kitnugs:
     image: ${DOCKER_REGISTRY-}kitnugs
     build:
       context: .
@@ -29,13 +22,3 @@ services:
     ports:
         - "8080:8080"
         - "8081:8081"
-        
-  documentation:
-    image: ${DOCKER_REGISTRY-}kitnugs-documentation
-    build:
-      context: ./Documentation
-      dockerfile: docker/Dockerfile
-    environment:
-      - BASE_URL=/swagger
-      - 'SERVER_URLS=[{"url": "http://localhost:8090", "name": "HelloService"}]'
-    
