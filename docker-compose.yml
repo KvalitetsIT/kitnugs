@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:15
     ports: 
-        - 3306:3306
+        - 5432:5432
     environment:
         - POSTGRES_PASSWORD=secret1234
         - POSTGRES_DB=hellodb
