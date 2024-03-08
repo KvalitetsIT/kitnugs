@@ -44,15 +44,19 @@ namespace IntegrationTest
 
         private static void BuildAndStartService(INetwork network)
         {
-            var image = new ImageFromDockerfileBuilder()
-              .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), string.Empty)
-              .WithDockerfile("KitNugs/Dockerfile")
-              .WithName("kvalitetsit/kitnugs")
-              .WithCleanUp(false)
-              .Build();
+            var useExistingImage = Environment.GetEnvironmentVariable("USE_EXISTING_IMAGE") ?? "false";
+            if (useExistingImage != "true")
+            {
+                var image = new ImageFromDockerfileBuilder()
+                    .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), string.Empty)
+                    .WithDockerfile("KitNugs/Dockerfile-fat")
+                    .WithName("kvalitetsit/kitnugs")
+                    .WithCleanUp(false)
+                    .Build();
 
-            image.CreateAsync()
-                .Wait();
+                image.CreateAsync()
+                    .Wait();
+            }
 
             var service = new ContainerBuilder()
                 .WithImage("kvalitetsit/kitnugs:latest")
