@@ -38,7 +38,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal ./UnitTest/UnitTest.csproj
 
     - name: Build docker image
-      run: docker build . -f EdaReceive/Dockerfile --tag kvalitetsit/pfa-eda-receive:latest
+      run: docker build . -f KitNugs/Dockerfile --tag kvalitetsit/kitnugs:latest
 
     - name: IntegrationTest
       run: dotnet test --no-build --verbosity normal ./IntegrationTest/IntegrationTest.csproj
