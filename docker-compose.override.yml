@@ -1,6 +1,6 @@
 version: '3.4'
 
 services:
-  application:
+  kitnugs:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
