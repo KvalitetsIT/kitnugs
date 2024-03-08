@@ -92,6 +92,17 @@ When a schema change is required a new migration must be added.
 
 After the model have been changed in the code a new migration is added with the command `dotnet ef migrations add <migration name>`. Consider naming your migration something meaningful. 
 
+## Docker image
+
+The service is pushing a docker image that is based on Ubuntu Chiseled. See [KitNugs/Dockerfile](KitNugs/Dockerfile) for exact version. This image
+is stripped for everything expect the runtime etc. This also means that it is not possible to debug into the
+container etc. Therefore the solution contains two Dockerfiles. One that is used to build the image that is pushed to
+Docker Hub and one that is used during development. See [KitNugs/Dockerfile](KitNugs/Dockerfile) and
+[KitNugs/Dockerfile-fat](KitNugs/Dockerfile-fat) for the two Dockerfiles.
+
+The image that is pushed to Docker Hub is used for the integration test in the CI/CD process. This guarantees that the
+image pushed to Docker Hub is working as expected.
+
 ## Configuration
 
 Configuration is prefarably done through environment variables.

@@ -15,7 +15,7 @@ services:
     image: ${DOCKER_REGISTRY-}kitnugs
     build:
       context: .
-      dockerfile: KitNugs/Dockerfile
+      dockerfile: KitNugs/Dockerfile-fat
     environment: 
         - TEST_VAR=TEST VARIABLE
         - "Serilog__MinimumLevel__Default=Debug"
