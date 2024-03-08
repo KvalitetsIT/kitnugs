@@ -1,31 +1,22 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# Changing this file most likely also requires changes to Dockerfile-fat.
+FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build
+ARG TARGETARCH
+WORKDIR /source
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 8080 8081
+# copy csproj and restore as distinct layers
+COPY Documentation/*.csproj Documentation/
+RUN dotnet restore -a $TARGETARCH  Documentation
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY ["KitNugs/KitNugs.csproj", "KitNugs/"]
-RUN dotnet restore "KitNugs/KitNugs.csproj"
+COPY KitNugs/*.csproj KitNugs/
+RUN dotnet restore -a $TARGETARCH  KitNugs
+
+# copy everything else and build app
 COPY . .
-WORKDIR "/src/KitNugs"
-RUN dotnet build "KitNugs.csproj" -c Release -o /app/build
+RUN dotnet publish -a $TARGETARCH --no-restore -o /app KitNugs
 
-FROM build AS publish
-RUN dotnet publish "KitNugs.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
-
-RUN groupadd --gid 11000 appuser && \
-    useradd --gid 11000 --uid 11000 -m appuser
-
-
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-jammy-chiseled-extra
+EXPOSE 8080 8081
 WORKDIR /app
-COPY --from=publish /app/publish .
-
-RUN chmod 644 /app/appsettings.json
-
-USER 11000
-
-CMD ["dotnet", "KitNugs.dll"]
+COPY --from=build /app .
+ENTRYPOINT ["./KitNugs"]
