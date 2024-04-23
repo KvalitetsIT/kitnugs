@@ -4,6 +4,7 @@ using KitNugs.Configuration;
 using KitNugs.Logging;
 using KitNugs.Repository;
 using KitNugs.Services;
+using KvalitetsIT.Prometheus.NetRuntime;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -65,6 +66,8 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 app.UseMiddleware<LogHeaderMiddleware>();
+
+RuntimeVersionMetric.AddRuntimeVersionMetric();
 
 app.UseHttpMetrics();
 
