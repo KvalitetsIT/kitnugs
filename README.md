@@ -13,10 +13,16 @@ Below is a set of recommendations for being a good service. The recommendations 
 5. Support multiple instances
 6. Always be in a releasable state
 7. Automate build and deployment.
+8. Application log to stdout
+9. Set a user in the docker file (non-root)
+10. Readonly filesystem
+11. Use least linux kernel capabilities
 
 Some of above recommendations are heavily inspired by [https://12factor.net/](https://12factor.net/). It is recommended 
 read [https://12factor.net/](https://12factor.net/) for more inspiration and further details. Some points go 
 further than just being a good service and also touches areas like operations.
+
+Point 9 to 11 are from [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
 
 ## Requirements
 
