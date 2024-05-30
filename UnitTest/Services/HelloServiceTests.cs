@@ -32,6 +32,13 @@ namespace UnitTest.Services
             _dbContext?.Dispose();
         }
 
+
+        [Test]
+        public void IntendedFailure()
+        {
+            Assert.That(true, Is.False);
+        }
+        
         [Test]
         public void TestBusinessLogic()
         {
