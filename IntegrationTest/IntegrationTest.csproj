@@ -28,7 +28,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Testcontainers" Version="4.0.0" />
-    <PackageReference Include="Testcontainers.MariaDb" Version="3.10.0" />
+    <PackageReference Include="Testcontainers.MariaDb" Version="4.0.0" />
     <PackageReference Include="Testcontainers.MySql" Version="4.0.0" />
   </ItemGroup>
 
