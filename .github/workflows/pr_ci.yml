@@ -15,7 +15,7 @@ jobs:
         echo "DOCKER_SERVICE=kvalitetsit/kitnugs" >> $GITHUB_ENV
 
 # Checkout source code        
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6.0.2
 
 # Setup .NET version 
     - name: Setup .NET
